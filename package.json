@@ -1,0 +1,27 @@
+{
+    "name": "swc-viewer",
+    "version": "0.0.1",
+    "description": "Neuron viewer for SWC format",
+    "main": "lib/swc-viewer.js",
+    "scripts": {
+        "build": "rollup -c",
+        "lint": "tsc --noEmit",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "neuron",
+        "swc",
+        "visualization"
+    ],
+    "author": "Celeste",
+    "license": "MIT",
+    "devDependencies": {
+        "esbuild": "^0.13.4",
+        "rollup": "^2.58.0",
+        "rollup-plugin-esbuild": "^4.5.0",
+        "typescript": "^4.4.3"
+    },
+    "dependencies": {
+        "@tsconfig/recommended": "^1.0.1"
+    }
+}
