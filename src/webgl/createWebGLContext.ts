@@ -1,6 +1,6 @@
 import type { NeuronNode, WebGLContext } from "@/types"
 import { getElement } from "@/utils"
-import { PerspectiveCamera, Scene, Vector3, WebGLRenderer } from "three"
+import { Group, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"
 import { createConnect as _createConnect } from "./createConnect"
 import { createNode as _createNode } from "./createNode"
@@ -9,7 +9,10 @@ export function createWebGLContext(): WebGLContext {
   const scene = new Scene()
   const camera = new PerspectiveCamera()
   const renderer = new WebGLRenderer()
+  const root = new Group()
   const animateEvents: (() => void)[] = []
+
+  scene.add(root)
 
   return {
     mount(container) {
@@ -29,22 +32,22 @@ export function createWebGLContext(): WebGLContext {
       controls.update()
       animateEvents.push(() => controls.update())
 
-      // render, must be last event
+      // render event which must be last one
       animateEvents.push(() => renderer.render(scene, camera))
     },
     rotate(axis, angle) {
-      scene.rotateOnAxis(new Vector3(axis.x, axis.y, axis.z), angle)
+      root.rotateOnAxis(new Vector3(axis.x, axis.y, axis.z), angle)
     },
-    animate() {
+    update() {
       animateEvents.forEach((event) => event())
     },
     createNode(node) {
       const object = _createNode(node)
-      scene.add(object)
+      root.add(object)
     },
     createConnect(parent: NeuronNode, child: NeuronNode) {
-      // const connect = _createConnect(parent, child)
-      // scene.add(connect)
+      const connect = _createConnect(parent, child)
+      root.add(connect)
     },
   }
 }

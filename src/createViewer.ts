@@ -27,7 +27,7 @@ export function createViewer() {
   function animate() {
     requestAnimationFrame(animate)
     animateEventControl.events.forEach((event) => event())
-    ctx.animate()
+    ctx.update()
   }
 
   const { enableAutoRotate, disableAutoRotate } = createAutoRotateControl(
@@ -49,7 +49,7 @@ export function createViewer() {
 }
 
 function createTestData(ctx: WebGLContext) {
-  ctx.createNode({
+  const node1 = {
     id: 0,
     structure: NeuronStructure.axon,
     x: 0,
@@ -57,15 +57,19 @@ function createTestData(ctx: WebGLContext) {
     z: 0,
     radius: 50,
     parent: -1,
-  })
+  }
 
-  ctx.createNode({
+  const node2 = {
     id: 1,
     structure: NeuronStructure.apicalDendrite,
-    x: 30,
-    y: 30,
-    z: 30,
-    radius: 50,
+    x: 80,
+    y: 80,
+    z: 80,
+    radius: 40,
     parent: -1,
-  })
+  }
+
+  ctx.createNode(node1)
+  ctx.createNode(node2)
+  ctx.createConnect(node1, node2)
 }
