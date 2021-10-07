@@ -1,6 +1,12 @@
 import type { NeuronNode, WebGLContext } from "@/types"
 import { getElement } from "@/utils"
-import { Object3D, PerspectiveCamera, Scene, WebGLRenderer } from "three"
+import {
+  Object3D,
+  PerspectiveCamera,
+  Scene,
+  Vector3,
+  WebGLRenderer,
+} from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"
 import { createConnect as _createConnect } from "./createConnect"
 import { createNode as _createNode } from "./createNode"
@@ -25,12 +31,35 @@ export function createWebGLContext(): WebGLContext {
     camera.position.set(0, 0, 1000)
     camera.updateProjectionMatrix()
 
-    // enable rotate and damping
+    // enable damping
     const controls = new OrbitControls(camera, el)
-    controls.autoRotate = true
     controls.enableDamping = true
     controls.update()
     animateEvents.push(() => controls.update())
+
+    // enable auto rotate
+    enableAutoRotate()
+  }
+
+  // auto rotate
+  let autoRotateEvent: (() => void) | null = null
+  function enableAutoRotate(angle = 0.001, axis = new Vector3(-1, 1, 1)) {
+    if (!autoRotateEvent) {
+      disableAutoRotate()
+    }
+
+    autoRotateEvent = () => root.rotateOnAxis(axis, angle)
+    animateEvents.push(autoRotateEvent)
+  }
+
+  function disableAutoRotate() {
+    if (!autoRotateEvent) {
+      return
+    }
+
+    const index = animateEvents.indexOf(autoRotateEvent)
+    animateEvents.splice(index, 1)
+    autoRotateEvent = null
   }
 
   // enable animate, rotate and damping

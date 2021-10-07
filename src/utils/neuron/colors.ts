@@ -32,7 +32,6 @@ const colors = [
 
 export function getColorHex(structure: NeuronStructure): number {
   const index = structure as number
-  console.log(index, colors[index])
   return colors[index] ?? NaN
 }
 
