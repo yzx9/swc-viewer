@@ -1,56 +1,52 @@
-import { PerspectiveCamera, Scene, WebGLRenderer } from "three"
-import type { NeuronNode, WebGLContext } from "../types"
-import { createNode as _createNode } from "./createNode"
+import type { NeuronNode, WebGLContext } from "@/types"
+import { getElement } from "@/utils"
+import { Object3D, PerspectiveCamera, Scene, WebGLRenderer } from "three"
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"
 import { createConnect as _createConnect } from "./createConnect"
+import { createNode as _createNode } from "./createNode"
 
 export function createWebGLContext(): WebGLContext {
+  // init
   const scene = new Scene()
-
   const camera = new PerspectiveCamera()
-  camera.position.z = 1000
-
   const renderer = new WebGLRenderer()
+  const root = new Object3D()
+  const animateEvents: (() => void)[] = []
+  scene.add(root)
 
   function mount(container: string | Element) {
-    const element =
-      typeof container === "string"
-        ? globalThis.document.querySelector(container)
-        : container
+    const el = getElement(container)
+    el.appendChild(renderer.domElement)
 
-    if (!(element instanceof Element)) {
-      throw new Error("Invalid container")
-    }
-
-    const { clientWidth: width, clientHeight: height } = element
+    // update camera
+    const { clientWidth: width, clientHeight: height } = el
     renderer.setSize(width, height)
     camera.aspect = width / height
+    camera.position.set(0, 0, 1000)
     camera.updateProjectionMatrix()
 
-    element.appendChild(renderer.domElement)
+    // enable rotate and damping
+    const controls = new OrbitControls(camera, el)
+    controls.autoRotate = true
+    controls.enableDamping = true
+    controls.update()
+    animateEvents.push(() => controls.update())
   }
 
-  const animateEvents: (() => void)[] = []
+  // enable animate, rotate and damping
   function animate() {
     requestAnimationFrame(animate)
-
-    for (let event of animateEvents) {
-      event()
-    }
-
+    animateEvents.forEach((event) => event())
     renderer.render(scene, camera)
   }
 
   function createNode(node: NeuronNode) {
     const object = _createNode(node)
-    scene.add(object)
-    animateEvents.push(() => {
-      object.rotation.x += 0.001
-      object.rotation.y += 0.001
-    })
+    root.add(object) // TODO: parent
   }
 
   function createConnect(from: NeuronNode, to: NeuronNode) {
-    const object = _createConnect(from, to)
+    const connect = _createConnect(from, to)
     // TODO
   }
 

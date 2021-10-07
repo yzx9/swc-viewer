@@ -5,5 +5,7 @@ import { Event, Mesh, MeshBasicMaterial, Object3D, SphereGeometry } from "three"
 export function createNode(node: NeuronNode): Object3D<Event> {
   const geometry = new SphereGeometry(node.radius)
   const material = new MeshBasicMaterial({ color: getColorHex(node.structure) })
-  return new Mesh(geometry, material)
+  const object = new Mesh(geometry, material)
+  object.position.set(node.x, node.y, node.z)
+  return object
 }

@@ -15,6 +15,16 @@ export function createViewer() {
     parent: -1,
   })
 
+  context.createNode({
+    id: 1,
+    structure: NeuronStructure.apicalDendrite,
+    x: 30,
+    y: 30,
+    z: 30,
+    radius: 50,
+    parent: -1,
+  })
+
   return identifyFunctions({
     mount: context.mount,
     animate: context.animate,
