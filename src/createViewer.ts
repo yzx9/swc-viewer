@@ -1,7 +1,7 @@
 import { createAutoRotateControl } from "./autoRotate"
+import { createAnimate } from "./createAnimate"
 import { createNeuron } from "./createNeuron"
 import { parseSWC } from "./parseSWC"
-import { EventControl, NeuronStructure, WebGLContext } from "./types"
 import { identifyFunctions } from "./utils"
 import { createWebGLContext } from "./webgl"
 
@@ -13,29 +13,7 @@ export function createViewer() {
     createNeuron(ctx, swc)
   }
 
-  const animateEventControl: EventControl = {
-    events: [] as (() => void)[],
-    register(event: () => void) {
-      this.events.push(event)
-      return () => this.remove(event)
-    },
-    remove(event: () => void) {
-      const events = (this as any).events
-
-      const index = events.indexOf(event)
-      if (index === -1) {
-        return
-      }
-
-      events.splice(index, 1)
-    },
-  }
-
-  function animate() {
-    requestAnimationFrame(animate)
-    animateEventControl.events.forEach((event) => event())
-    ctx.update()
-  }
+  const { animate, animateEventControl } = createAnimate(ctx)
 
   const { enableAutoRotate, disableAutoRotate } = createAutoRotateControl(
     animateEventControl,
