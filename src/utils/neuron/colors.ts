@@ -30,12 +30,12 @@ const colors = [
   [0, 0, 131], //20
 ].map(([r, g, b]) => r * 0x010000 + g * 0x000100 + b * 0x000001)
 
-export function getColorHex(structure: NeuronStructure): number {
+export function getColorRgbHex(structure: NeuronStructure): number {
   const index = structure as number
   return colors[index] ?? NaN
 }
 
-export function getColorStr(structure: NeuronStructure): string {
-  const color = getColorHex(structure)
+export function getColorRgbStr(structure: NeuronStructure): string {
+  const color = getColorRgbHex(structure)
   return color ? `#${color}` : ``
 }
