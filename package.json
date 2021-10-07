@@ -2,26 +2,40 @@
     "name": "swc-viewer",
     "version": "0.0.1",
     "description": "Neuron viewer for SWC format",
-    "main": "lib/swc-viewer.js",
-    "scripts": {
-        "build": "rollup -c",
-        "lint": "tsc --noEmit",
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
+    "author": "Celeste",
+    "license": "MIT",
+    "files": [
+        "lib"
+    ],
     "keywords": [
         "neuron",
         "swc",
         "visualization"
     ],
-    "author": "Celeste",
-    "license": "MIT",
+    "main": "./lib/swc-viewer.umd.js",
+    "module": "./lib/swc-viewer.es.js",
+    "exports": {
+        ".": {
+            "import": "./lib/swc-viewer.es.js",
+            "require": "./lib/swc-viewer.umd.js"
+        }
+    },
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc --noEmit && vite build",
+        "serve": "vite preview",
+        "lint": "tsc --noEmit",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
     "devDependencies": {
-        "esbuild": "^0.13.4",
-        "rollup": "^2.58.0",
-        "rollup-plugin-esbuild": "^4.5.0",
-        "typescript": "^4.4.3"
+        "@types/node": "^16.10.3",
+        "@types/three": "^0.132.2",
+        "typescript": "^4.4.3",
+        "upath": "^2.0.1",
+        "vite": "^2.6.3"
     },
     "dependencies": {
-        "@tsconfig/recommended": "^1.0.1"
+        "@tsconfig/recommended": "^1.0.1",
+        "three": "^0.133.1"
     }
 }
