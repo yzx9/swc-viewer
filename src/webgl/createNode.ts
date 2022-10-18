@@ -1,5 +1,5 @@
-import { NeuronNode } from "@/types"
-import { getColorRgbHex } from "@/utils"
+import { NeuronNode } from "../types"
+import { getColorRgbHex } from "../utils"
 import { Event, Mesh, MeshBasicMaterial, Object3D, SphereGeometry } from "three"
 
 export function createNode(node: NeuronNode): Object3D<Event> {

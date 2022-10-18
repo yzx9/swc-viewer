@@ -3,7 +3,7 @@ import {
   getEulerDistance,
   getMidpoint,
   getVertex,
-} from "@/utils"
+} from "../utils"
 import {
   CylinderGeometry,
   Event,

@@ -1,4 +1,4 @@
-import { NeuronNode } from "@/types"
+import { NeuronNode } from "./types"
 
 const float = "-?\\d*(?:\\.\\d+)?"
 const pattern = new RegExp(

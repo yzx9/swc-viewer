@@ -1,4 +1,4 @@
-import { EventControl, WebGLContext } from "@/types"
+import { EventControl, WebGLContext } from "./types"
 
 export function createAnimate(ctx: WebGLContext) {
   const animateEventControl: EventControl = {

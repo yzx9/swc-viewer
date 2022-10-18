@@ -1,5 +1,5 @@
-import type { NeuronNode, WebGLContext } from "@/types"
-import { getElement } from "@/utils"
+import type { NeuronNode, WebGLContext } from "../types"
+import { getElement } from "../utils"
 import { Group, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"
 import { createConnect as _createConnect } from "./createConnect"
