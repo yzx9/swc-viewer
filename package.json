@@ -1,41 +1,35 @@
 {
-    "name": "swc-viewer",
-    "version": "0.0.1",
-    "description": "Neuron viewer for SWC format",
-    "author": "Celeste",
-    "license": "MIT",
-    "files": [
-        "lib"
-    ],
-    "keywords": [
-        "neuron",
-        "swc",
-        "visualization"
-    ],
-    "main": "./lib/swc-viewer.umd.js",
-    "module": "./lib/swc-viewer.es.js",
-    "exports": {
-        ".": {
-            "import": "./lib/swc-viewer.es.js",
-            "require": "./lib/swc-viewer.umd.js"
-        }
-    },
-    "scripts": {
-        "dev": "vite",
-        "build": "tsc --noEmit && vite build",
-        "serve": "vite preview",
-        "lint": "tsc --noEmit",
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "devDependencies": {
-        "@types/node": "^16.10.3",
-        "@types/three": "^0.132.2",
-        "typescript": "^4.4.3",
-        "upath": "^2.0.1",
-        "vite": "^2.6.3"
-    },
-    "dependencies": {
-        "@tsconfig/recommended": "^1.0.1",
-        "three": "^0.133.1"
-    }
+  "name": "swc-viewer",
+  "version": "0.0.1",
+  "description": "Neuron viewer for SWC format",
+  "author": "Celeste",
+  "license": "MIT",
+  "files": [
+    "lib"
+  ],
+  "keywords": [
+    "neuron",
+    "swc",
+    "visualization"
+  ],
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "serve": "vite preview",
+    "lint": "tsc --noEmit",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.1",
+    "@types/node": "^16.10.3",
+    "@types/three": "^0.132.2",
+    "typescript": "^4.4.3",
+    "upath": "^2.0.1",
+    "vite": "^2.6.3"
+  },
+  "dependencies": {
+    "three": "^0.133.1"
+  }
 }
