@@ -1,7 +1,6 @@
 import { createAnimate } from "./animate"
 import { AutoRotateControl, Axis, createAutoRotateControl } from "./autoRotate"
-import { createNeuron } from "./neuron"
-import { parseSWC } from "./swc"
+import { loadSWC } from "./neuron"
 import { WebGLContext } from "./webgl"
 
 export type Viewer = {
@@ -42,8 +41,8 @@ class _Viewer {
   }
 
   load(content: string): this {
-    const swc = parseSWC(content)
-    createNeuron(this.ctx, swc)
+    const swc = loadSWC(content)
+    swc.addTo(this.ctx)
     return this
   }
 
