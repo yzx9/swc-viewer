@@ -34,9 +34,6 @@ class _Viewer {
     this.#animate = animate
 
     this.#autoRotate = createAutoRotateControl(animateEventControl, ctx)
-
-    // enable auto rotate by default
-    this.enableAutoRotate({ x: -1, y: 1, z: 1 }, 0.001)
   }
 
   mount(container: string | Element): this {

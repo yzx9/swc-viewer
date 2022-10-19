@@ -1,4 +1,4 @@
-import type { NeuronStructure } from "../../types"
+import type { NeuronType } from "../../neuron"
 
 const colors = [
   [255, 255, 255], // white, 0-undefined
@@ -30,12 +30,12 @@ const colors = [
   [0, 0, 131], //20
 ].map(([r, g, b]) => r * 0x010000 + g * 0x000100 + b * 0x000001)
 
-export function getColorRgbHex(structure: NeuronStructure): number {
-  const index = structure as number
+export function getColorRgbHex(type: NeuronType): number {
+  const index = type as number
   return colors[index] ?? NaN
 }
 
-export function getColorRgbStr(structure: NeuronStructure): string {
-  const color = getColorRgbHex(structure)
+export function getColorRgbStr(type: NeuronType): string {
+  const color = getColorRgbHex(type)
   return color ? `#${color}` : ``
 }
