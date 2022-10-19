@@ -1,4 +1,4 @@
-import type { NeuronNode } from "./neuronNode"
+import type { NeuronNode } from "./swc"
 
 export interface WebGLContext {
   createNode(node: NeuronNode): void

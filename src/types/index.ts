@@ -1,4 +1,2 @@
-export * from "./eventControl"
-export * from "./neuronNode"
-export * from "./neuronStructure"
+export * from "./swc"
 export * from "./webglContext"

@@ -1,2 +1,2 @@
-export * from "./createViewer"
+export * from "./viewer"
 export * from "./types"

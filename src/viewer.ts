@@ -1,6 +1,6 @@
 import { createAutoRotateControl } from "./autoRotate"
-import { createAnimate } from "./createAnimate"
-import { createNeuron } from "./createNeuron"
+import { createAnimate } from "./animate"
+import { createNeuron } from "./neuron"
 import { parseSWC } from "./parseSWC"
 import { identifyFunctions } from "./utils"
 import { createWebGLContext } from "./webgl"

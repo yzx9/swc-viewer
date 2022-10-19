@@ -1,4 +1,5 @@
-import type { EventControl, WebGLContext } from "./types"
+import { EventControl } from "./animate"
+import type { WebGLContext } from "./types"
 
 export function createAutoRotateControl(
   animateEvents: EventControl,

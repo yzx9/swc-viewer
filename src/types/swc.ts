@@ -1,3 +1,13 @@
+export interface NeuronNode {
+  id: number
+  structure: NeuronStructure
+  x: number
+  y: number
+  z: number
+  radius: number
+  parent: number | null
+}
+
 export enum NeuronStructure {
   undefined,
   soma,

@@ -1,4 +1,14 @@
-import { EventControl, WebGLContext } from "./types"
+import { WebGLContext } from "./types"
+
+type Event = () => void
+
+type RemoveEventHandler = () => void
+
+export interface EventControl {
+  events: Event[]
+  register(event: Event): RemoveEventHandler
+  remove(event: Event): void
+}
 
 export function createAnimate(ctx: WebGLContext) {
   const animateEventControl: EventControl = {
