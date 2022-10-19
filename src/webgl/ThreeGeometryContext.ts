@@ -24,18 +24,27 @@ import {
 } from "../utils"
 import { WebGLContext } from "./webglContext"
 
-export function createThreeGeometryContext(): WebGLContext {
-  return new ThreeGeometryContext()
+export function createThreeGeometryContext(
+  options: {
+    alpha?: boolean
+  } = {}
+): WebGLContext {
+  const { alpha = false } = options
+  return new ThreeGeometryContext({
+    alpha,
+  })
 }
 
 class ThreeGeometryContext implements WebGLContext {
   scene = new Scene()
   camera = new PerspectiveCamera()
-  renderer = new WebGLRenderer()
+  renderer: WebGLRenderer
   animateEvents: (() => void)[] = []
   root = new Group()
 
-  constructor() {
+  constructor(options: { alpha: boolean }) {
+    const { alpha } = options
+    this.renderer = new WebGLRenderer({ alpha })
     this.scene.add(this.root)
   }
 

@@ -13,7 +13,8 @@ export type Viewer = {
 }
 
 export function createViewer(options: { ctx: WebGLContext }): _Viewer {
-  const viewer = new _Viewer(options.ctx)
+  const { ctx } = options
+  const viewer = new _Viewer(ctx)
 
   // enable auto rotate by default
   viewer.enableAutoRotate({ x: -1, y: 1, z: 1 }, 0.001)
