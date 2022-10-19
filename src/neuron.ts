@@ -1,4 +1,5 @@
-import { NeuronNode, WebGLContext } from "./types"
+import { NeuronNode } from "./swc"
+import { WebGLContext } from "./webgl"
 
 export function createNeuron(
   ctx: WebGLContext,

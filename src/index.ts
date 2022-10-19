@@ -1,2 +1,2 @@
 export * from "./viewer"
-export * from "./types"
+export * from "./webgl"

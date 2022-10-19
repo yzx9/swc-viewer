@@ -1,4 +1,4 @@
-import { WebGLContext } from "./types"
+import { WebGLContext } from "./webgl"
 
 type Event = () => void
 

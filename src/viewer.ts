@@ -1,33 +1,66 @@
-import { createAutoRotateControl } from "./autoRotate"
 import { createAnimate } from "./animate"
+import { AutoRotateControl, Axis, createAutoRotateControl } from "./autoRotate"
 import { createNeuron } from "./neuron"
-import { parseSWC } from "./parseSWC"
-import { identifyFunctions } from "./utils"
-import { createWebGLContext } from "./webgl"
+import { parseSWC } from "./swc"
+import { WebGLContext } from "./webgl"
 
-export function createViewer() {
-  const ctx = createWebGLContext()
+export type Viewer = {
+  mount(container: string | Element): Viewer
+  load(content: string): Viewer
+  animate(): Viewer
+  enableAutoRotate(axis: Axis, angle: number): Viewer
+  disableAutoRotate(): Viewer
+}
 
-  function load(content: string) {
-    const swc = parseSWC(content)
-    createNeuron(ctx, swc)
-  }
-
-  const { animate, animateEventControl } = createAnimate(ctx)
-
-  const { enableAutoRotate, disableAutoRotate } = createAutoRotateControl(
-    animateEventControl,
-    ctx
-  )
+export function createViewer(options: { ctx: WebGLContext }): _Viewer {
+  const viewer = new _Viewer(options.ctx)
 
   // enable auto rotate by default
-  enableAutoRotate({ x: -1, y: 1, z: 1 }, 0.001)
+  viewer.enableAutoRotate({ x: -1, y: 1, z: 1 }, 0.001)
 
-  return identifyFunctions({
-    mount: ctx.mount,
-    load,
-    animate,
-    enableAutoRotate,
-    disableAutoRotate,
-  })
+  return viewer
+}
+
+class _Viewer {
+  ctx: WebGLContext
+  #animate: () => void
+  #autoRotate: AutoRotateControl
+
+  constructor(ctx: WebGLContext) {
+    this.ctx = ctx
+
+    const { animate, animateEventControl } = createAnimate(ctx)
+    this.#animate = animate
+
+    this.#autoRotate = createAutoRotateControl(animateEventControl, ctx)
+
+    // enable auto rotate by default
+    this.enableAutoRotate({ x: -1, y: 1, z: 1 }, 0.001)
+  }
+
+  mount(container: string | Element): this {
+    this.ctx.mount(container)
+    return this
+  }
+
+  load(content: string): this {
+    const swc = parseSWC(content)
+    createNeuron(this.ctx, swc)
+    return this
+  }
+
+  animate(): this {
+    this.#animate()
+    return this
+  }
+
+  enableAutoRotate(axis: Axis, angle: number): this {
+    this.#autoRotate.enable(axis, angle)
+    return this
+  }
+
+  disableAutoRotate(): this {
+    this.#autoRotate.disable()
+    return this
+  }
 }
