@@ -35,13 +35,17 @@ export enum NeuronType {
   endPoint,
 }
 
-export function loadSWC(swc: string, shiftOrigin: boolean = true): Neuron {
+export function loadSWC(
+  swc: string,
+  options: { shiftOrigin?: boolean } = {}
+): Neuron {
+  const { shiftOrigin = true } = options
+
   const nodes = parseSWC(swc)
   const neuron = new Neuron(nodes)
 
   if (shiftOrigin) {
-    const { x, y, z } = nodes["1"]
-    neuron.shift(-x, -y, -z)
+    neuron.shiftOrigin()
   }
 
   return neuron
@@ -98,6 +102,28 @@ export class Neuron {
       node.y += y
       node.z += z
     })
+  }
+
+  rotate(T: number[][]): void {
+    if (T.length === 3 && T.every((a) => a.length === 3)) {
+      console.log(111)
+      Reflect.ownKeys(this.nodes).map((key) => {
+        const node = this.nodes[key as string]
+        const { x, y, z } = node
+        node.x += T[0][0] * x + T[0][1] * y + T[0][2] * z
+        node.y += T[1][0] * x + T[1][1] * y + T[1][2] * z
+        node.z += T[2][0] * x + T[2][1] * y + T[2][2] * z
+      })
+    } else if (T.length === 4 && T.every((a) => a.length === 4)) {
+      throw Error("Not implement")
+    } else {
+      throw Error("Invalid transformation matrix")
+    }
+  }
+
+  shiftOrigin() {
+    const { x, y, z } = this.nodes["1"]
+    this.shift(-x, -y, -z)
   }
 }
 
