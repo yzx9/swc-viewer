@@ -1,20 +1,5 @@
-import {
-  Color,
-  CylinderGeometry,
-  Event,
-  Group,
-  Mesh,
-  MeshBasicMaterial,
-  Object3D,
-  PerspectiveCamera,
-  Scene,
-  ShaderMaterial,
-  SphereGeometry,
-  Vector3,
-  WebGLRenderer,
-} from "three"
+import { Group, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"
-import { getElement, getEulerDistance, getMidpoint, getVertex } from "../utils"
 import { Node, WebGLContext } from "./webglContext"
 
 export class ThreeContext implements WebGLContext {
@@ -30,19 +15,18 @@ export class ThreeContext implements WebGLContext {
     this.scene.add(this.root)
   }
 
-  mount(container: string | Element) {
-    const el = getElement(container)
-    el.appendChild(this.renderer.domElement)
+  mount(container: HTMLElement) {
+    container.appendChild(this.renderer.domElement)
 
     // update camera
-    const { clientWidth: width, clientHeight: height } = el
+    const { clientWidth: width, clientHeight: height } = container
     this.renderer.setSize(width, height)
     this.camera.aspect = width / height
     this.camera.position.set(0, 0, 100)
     this.camera.updateProjectionMatrix()
 
     // enable damping
-    const controls = new OrbitControls(this.camera, el)
+    const controls = new OrbitControls(this.camera, container)
     controls.enableDamping = true
     controls.update()
     this.animateEvents.push(() => controls.update())

@@ -7,7 +7,7 @@ export type Node = {
 }
 
 export interface WebGLContext {
-  mount(container: string | Element): void
+  mount(container: HTMLElement): void
   update(): void
   createNode(node: Node): void
   createConnect(parent: Node, child: Node): void
