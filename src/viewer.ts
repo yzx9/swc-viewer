@@ -1,38 +1,19 @@
-import { createAnimate } from "./animate"
-import { AutoRotateControl, Axis, createAutoRotateControl } from "./autoRotate"
+import { Animation, createAnimation } from "./animations"
 import { loadSWC } from "./neuron"
 import { WebGLContext } from "./webgl"
 
-export type Viewer = {
-  mount(container: string | Element): Viewer
-  load(content: string): Viewer
-  animate(): Viewer
-  enableAutoRotate(axis: Axis, angle: number): Viewer
-  disableAutoRotate(): Viewer
-}
-
-export function createViewer(options: { ctx: WebGLContext }): _Viewer {
+export function createViewer(options: { ctx: WebGLContext }): Viewer {
   const { ctx } = options
-  const viewer = new _Viewer(ctx)
-
-  // enable auto rotate by default
-  viewer.enableAutoRotate({ x: -1, y: 1, z: 1 }, 0.001)
-
-  return viewer
+  return new Viewer(ctx)
 }
 
-class _Viewer {
+export class Viewer {
   ctx: WebGLContext
-  #animate: () => void
-  #autoRotate: AutoRotateControl
+  animation: Animation
 
   constructor(ctx: WebGLContext) {
     this.ctx = ctx
-
-    const { animate, animateEventControl } = createAnimate(ctx)
-    this.#animate = animate
-
-    this.#autoRotate = createAutoRotateControl(animateEventControl, ctx)
+    this.animation = createAnimation(ctx)
   }
 
   mount(container: string | Element): this {
@@ -47,17 +28,7 @@ class _Viewer {
   }
 
   animate(): this {
-    this.#animate()
-    return this
-  }
-
-  enableAutoRotate(axis: Axis, angle: number): this {
-    this.#autoRotate.enable(axis, angle)
-    return this
-  }
-
-  disableAutoRotate(): this {
-    this.#autoRotate.disable()
+    this.animation.update()
     return this
   }
 }
