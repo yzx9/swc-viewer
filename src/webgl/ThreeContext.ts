@@ -39,15 +39,20 @@ export class ThreeContext implements WebGLContext {
     this.animateEvents.forEach((event) => event())
   }
 
-  createNode(node: Node) {
+  createNode(node: Node): () => void {
     throw new Error("Not Implement")
   }
 
-  createConnect(parent: Node, child: Node) {
+  createConnect(parent: Node, child: Node): () => void {
     throw new Error("Not Implement")
   }
 
-  rotate(axis: { x: number; y: number; z: number }, angle: number) {
+  rotate(axis: { x: number; y: number; z: number }, angle: number): void {
     this.root.rotateOnAxis(new Vector3(axis.x, axis.y, axis.z), angle)
+  }
+
+  setCameraPosition(x: number, y: number, z: number): void {
+    this.camera.position.set(x, y, z)
+    this.camera.updateProjectionMatrix()
   }
 }

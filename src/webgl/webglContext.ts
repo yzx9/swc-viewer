@@ -16,4 +16,5 @@ export interface WebGLContext {
   createNode(node: Node): Remover
   createConnect(parent: Node, child: Node): Remover
   rotate(axis: { x: number; y: number; z: number }, angle: number): void
+  setCameraPosition(x: number, y: number, z: number): void
 }
