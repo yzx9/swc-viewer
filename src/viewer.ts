@@ -1,14 +1,16 @@
 import { Animation, createAnimation } from "./animations"
-import { loadSWC } from "./neuron"
+import { Neuron } from "./neuron"
 import { getElement } from "./utils"
 import { WebGLContext } from "./webgl"
+
+type Remover = () => void
 
 export function createViewer(options: {
   ctx: WebGLContext
   mount: string | Element
 }): Viewer {
   const { ctx, mount } = options
-  return new Viewer(ctx).mount(getElement(mount))
+  return new Viewer(ctx).mount(getElement(mount)).animate()
 }
 
 export class Viewer {
@@ -25,14 +27,12 @@ export class Viewer {
     return this
   }
 
-  load(content: string): this {
-    const swc = loadSWC(content)
-    swc.addTo(this.ctx)
-    return this
-  }
-
   animate(): this {
     this.animation.update()
     return this
+  }
+
+  add(neuron: Neuron): Remover {
+    return neuron.addTo(this.ctx)
   }
 }

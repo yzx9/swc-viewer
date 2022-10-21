@@ -1,12 +1,8 @@
 import { getColorRgbHex } from "./utils"
 import { WebGLContext } from "./webgl"
 
+type Remover = () => void
 type Nodes = Record<string, NeuronNode>
-
-export type Neuron = {
-  addTo(ctx: WebGLContext): Neuron
-  shift(x: number, y: number, z: number): void
-}
 
 export type NeuronNode = {
   id: number
@@ -41,7 +37,7 @@ export enum NeuronType {
 
 export function loadSWC(swc: string, shiftOrigin: boolean = true): Neuron {
   const nodes = parseSWC(swc)
-  const neuron = new _Neuron(nodes)
+  const neuron = new Neuron(nodes)
 
   if (shiftOrigin) {
     const { x, y, z } = nodes["1"]
@@ -51,14 +47,15 @@ export function loadSWC(swc: string, shiftOrigin: boolean = true): Neuron {
   return neuron
 }
 
-class _Neuron {
+export class Neuron {
   nodes: Record<string, NeuronNode>
 
   constructor(nodes: Record<string, NeuronNode>) {
     this.nodes = nodes
   }
 
-  addTo(ctx: WebGLContext): this {
+  addTo(ctx: WebGLContext): Remover {
+    const removers: (() => void)[] = []
     Reflect.ownKeys(this.nodes).map((key) => {
       const node = this.nodes[key as string]
       const ctxNode = {
@@ -87,13 +84,14 @@ class _Neuron {
         radius: parent.radius,
         color: getColorRgbHex(parent.type),
       }
-      ctx.createConnect(ctxParentNode, ctxNode)
+
+      removers.push(ctx.createConnect(ctxParentNode, ctxNode))
     })
 
-    return this
+    return () => removers.forEach((remove) => remove())
   }
 
-  shift(x: number, y: number, z: number) {
+  shift(x: number, y: number, z: number): void {
     Reflect.ownKeys(this.nodes).map((key) => {
       const node = this.nodes[key as string]
       node.x += x

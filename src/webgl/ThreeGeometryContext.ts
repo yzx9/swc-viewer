@@ -21,15 +21,16 @@ export function createThreeGeometryContext(
 }
 
 class ThreeGeometryContext extends ThreeContext implements WebGLContext {
-  createNode(node: Node) {
+  createNode(node: Node): () => void {
     const geometry = new SphereGeometry(node.radius)
     const material = new MeshBasicMaterial({ color: node.color })
     const object = new Mesh(geometry, material)
     object.position.set(node.x, node.y, node.z)
     this.root.add(object)
+    return () => this.root.remove(object)
   }
 
-  createConnect(parent: Node, child: Node) {
+  createConnect(parent: Node, child: Node): () => void {
     const distance = getEulerDistance(parent, child)
 
     const geometry = new CylinderGeometry(
@@ -78,5 +79,6 @@ class ThreeGeometryContext extends ThreeContext implements WebGLContext {
     // geometry.lookAt(new Vector3(0, 0, 0))
 
     this.root.add(object)
+    return () => this.root.remove(object)
   }
 }

@@ -1,3 +1,7 @@
+import { Object3D } from "three"
+
+type Remover = () => void
+
 export type Node = {
   x: number
   y: number
@@ -9,7 +13,7 @@ export type Node = {
 export interface WebGLContext {
   mount(container: HTMLElement): void
   update(): void
-  createNode(node: Node): void
-  createConnect(parent: Node, child: Node): void
+  createNode(node: Node): Remover
+  createConnect(parent: Node, child: Node): Remover
   rotate(axis: { x: number; y: number; z: number }, angle: number): void
 }
