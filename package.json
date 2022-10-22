@@ -1,6 +1,6 @@
 {
   "name": "neuron-swc-viewer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Neuron viewer for SWC format",
   "author": "Celeste",
   "license": "MIT",
@@ -12,13 +12,13 @@
     "swc",
     "visualization"
   ],
-  "main": "./lib/swc-viewer.umd.js",
-  "module": "./lib/swc-viewer.es.js",
+  "main": "./lib/neuron-swc-viewer.umd.js",
+  "module": "./lib/neuron-swc-viewer.es.js",
   "types": "./lib/index.d.ts",
   "exports": {
     ".": {
-      "import": "./lib/swc-viewer.es.js",
-      "require": "./lib/swc-viewer.umd.js"
+      "import": "./lib/neuron-swc-viewer.es.js",
+      "require": "./lib/neuron-swc-viewer.umd.js"
     }
   },
   "scripts": {
