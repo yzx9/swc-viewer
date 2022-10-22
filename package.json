@@ -1,6 +1,6 @@
 {
-  "name": "swc-viewer",
-  "version": "0.0.1",
+  "name": "neuron-swc-viewer",
+  "version": "1.0.0",
   "description": "Neuron viewer for SWC format",
   "author": "Celeste",
   "license": "MIT",
@@ -12,8 +12,15 @@
     "swc",
     "visualization"
   ],
-  "main": "src/index.ts",
-  "types": "src/index.ts",
+  "main": "./lib/swc-viewer.umd.js",
+  "module": "./lib/swc-viewer.es.js",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./lib/swc-viewer.es.js",
+      "require": "./lib/swc-viewer.umd.js"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
@@ -27,7 +34,8 @@
     "@types/three": "^0.132.2",
     "typescript": "^4.4.3",
     "upath": "^2.0.1",
-    "vite": "^2.6.3"
+    "vite": "^2.6.3",
+    "vite-plugin-dts": "^1.6.6"
   },
   "dependencies": {
     "three": "^0.133.1"
